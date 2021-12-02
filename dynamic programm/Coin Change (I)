@@ -1,0 +1,95 @@
+import java.util.Scanner;
+
+public class Main{
+
+    static Scanner in=new Scanner(System.in);
+
+    static int testCases,n,k;
+    static long mod=100000007 ;
+
+    static int coins[],quantity[];
+    
+    static long dp[][];
+
+    static long solve(int i,int j){
+        
+        long ans=0;
+        
+        if(j==k)
+        {
+            
+            return 1;
+            
+        }
+        
+        if(i==n)
+        {
+            
+            return 0;
+            
+        }
+        
+        if(dp[i][j]!=-1)
+        {
+            
+            return dp[i][j];
+            
+        }
+        
+        for(int index=0;index<=quantity[i] && j+(index*coins[i])<=k;index++ )
+        {
+            
+            ans+=solve(i+1,j+index*coins[i] );
+            ans%=mod;
+            
+        }
+        
+        dp[i][j]=ans;
+        
+        return dp[i][j];
+
+    }
+
+    public static void main(String [] amit){
+
+        testCases=in.nextInt();
+
+        for(int t=1;t<=testCases;t++){
+
+            n=in.nextInt();
+            k=in.nextInt();
+
+            coins=new int[n];
+
+            dp=new long[n][k+1];
+            quantity=new int[n];
+            
+            for(int i=0;i<n;i++){
+                
+                for(int j=0;j<=k;j++){
+                    
+                    dp[i][j]=-1;
+                    
+                }
+                
+            }
+
+            for(int i=0;i<n;i++){
+
+                coins[i]=in.nextInt();
+
+            }
+            
+            for(int i=0;i<n;i++){
+                
+                quantity[i]=in.nextInt();
+                
+            }
+
+             System.out.println("Case "+t+": "+solve(0,0));   
+
+        }
+
+    }
+
+}
