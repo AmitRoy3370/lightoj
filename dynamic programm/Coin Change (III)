@@ -1,0 +1,91 @@
+import java.util.Scanner;
+
+public class Main{
+
+    static Scanner in=new Scanner(System.in);
+
+    static int testCases,n,k;
+    static long mod=100000007 ;
+
+    static int coins[],quantity[];
+    
+    static int dp[];
+
+    static long solve(){
+        
+        //dp[0]=1;
+        
+        long ans=0;
+        
+        boolean visited[]=new boolean[k+1];
+        
+        visited[0]=true;
+        
+        for(int i=1;i<=n;i++){
+            
+            dp=new int[k+1];
+            
+            for(int j=coins[i];j<=k;j++){
+                
+                if(!visited[j] && visited[j- coins[i]] && dp[j-coins[i] ]<quantity[i] ){
+                    
+                    ans++;
+                    dp[j]=dp[j-coins[i] ]+1;
+                    visited[j]=true;
+                    
+                }
+                
+            }
+            
+        }
+        
+        return ans;
+        
+    }
+
+    public static void main(String [] amit){
+
+        testCases=in.nextInt();
+
+        for(int t=1;t<=testCases;t++){
+
+            n=in.nextInt();
+            k=in.nextInt();
+
+            coins=new int[n+1];
+
+            dp=new int[k+1];
+            quantity=new int[n+1];
+            
+            
+            for(int i=1;i<=n;i++){
+
+                coins[i]=in.nextInt();
+
+            }
+            
+            for(int i=1;i<=n;i++){
+                
+                quantity[i]=in.nextInt();
+                
+            }
+
+             System.out.println("Case "+t+": "+solve());   
+             
+             /*for(long p[]:dp){
+                 
+                 for(long q: p){
+                     
+                     System.out.print(q+" ");
+                     
+                 }
+                 
+                 System.out.println();
+                 
+             }*/
+
+        }
+
+    }
+
+}
