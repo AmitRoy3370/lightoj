@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class Main{
+
+    static Scanner in=new Scanner(System.in);
+
+    static int testCases,n,k;
+
+    static long mod=100000007;
+
+    static int coins[];
+
+    static void solve(int testCases){
+
+         long w[]=new long[k+1];
+
+        w[0]=1;
+
+        for(int i=1;i<=n;i++){
+
+            for(int j=1;j<=k;j++){
+
+                if(j>=coins[i]){
+
+                    w[j]=w[j]+w[j-coins[i]];
+
+                }
+                if(w[j]>mod){
+
+                    w[j]=w[j]%mod;
+                }
+            }
+
+        }
+
+        System.out.println("Case "+testCases+": "+w[k]);
+
+    }
+
+    public static void main(String[] amit){
+
+        testCases=in.nextInt();
+
+        for(int t=1;t<=testCases;t++){
+
+            n=in.nextInt();
+            k=in.nextInt();
+
+            coins=new int[n+1];
+
+            for(int i=1;i<=n;i++){
+
+                coins[i]=in.nextInt();
+
+            }
+
+            solve(t);
+
+        }
+
+    }
+
+}
