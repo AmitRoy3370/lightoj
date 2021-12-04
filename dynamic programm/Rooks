@@ -1,0 +1,89 @@
+import java.util.Scanner;
+
+public class Rooks{
+
+    static int testCases,n,r;
+
+    static Scanner in=new Scanner(System.in);
+
+   static long dp[][]=new long[35][35];
+    static long fact[]=new long[22];
+
+    static void initializeDp(){
+
+        for(int i=0;i<35;i++){
+
+            for(int j=0;j<35;j++) dp[i][j]=-1;
+
+        }
+    
+    }
+
+    static void makeFactorial(){
+
+        fact[0]=fact[1]=1;
+
+        for(int i=2;i<=20;i++) fact[i]=i*fact[i-1];
+
+    }
+
+    static long ncr(int n,int r){
+
+        if(n==r || r==0) return 1;
+        else if(r==1) return n;
+        else if(dp[(int)n][(int)r]!=-1 ) return dp[(int)n][(int)r];
+
+        dp[n][r]=ncr(n-1,r )+ncr(n-1,r-1);
+
+        return dp[(int)n][(int)r];
+
+    }
+
+    static long solve(){
+
+        long ans=0;
+
+        if(n>=r){ 
+            
+            ans=ncr(n,r); 
+            
+            ans=ans*ans*fact[r];
+            
+        }
+       
+        return ans;
+
+    }
+
+    static void solve(int testCases){
+
+        System.out.print("Case "+testCases+": ");
+
+        long ans=solve();
+
+        System.out.println(ans);
+
+    }
+
+    public static void main(String [] amit){
+
+        testCases=in.nextInt();
+
+        makeFactorial();
+        initializeDp();
+
+        for(int t=1;t<=testCases;t++){
+
+            n=in.nextInt();
+            r=in.nextInt();
+
+            solve(t);
+
+        }
+
+    }
+
+}
+
+
+
