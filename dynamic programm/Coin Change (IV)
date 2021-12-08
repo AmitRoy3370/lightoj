@@ -1,0 +1,133 @@
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
+public class Main{
+
+    static int testCases,n,size1,size2;
+    static long k;
+    
+    static Scanner in=new Scanner(System.in);
+    
+    static Map<Long,Boolean> combination2=new HashMap<>();
+    
+    static long arr1[]=new long[20];
+    
+    static long arr2[]=new long[20];
+    
+    static List<Long> combination1=new ArrayList<>();
+    
+    static void solve(int pos,long sum,int dir){
+        
+        if(dir==1 && pos>=size1){
+            
+            combination1.add(sum);
+            return;
+            
+        }else if(dir==2 && pos>=size2){
+            
+            combination2.put(sum,true);
+            
+            return;
+            
+        }
+        
+        long num=0;
+        
+        if(dir==1) num=arr1[pos];
+        else num=arr2[pos];
+        
+        solve(pos+1,sum,dir);
+        solve(pos+1,sum+num,dir);
+        solve(pos+1,sum+2*num,dir);
+        
+    }
+
+    static String solve(){
+        
+        if(n>1){
+            
+            size1=n/2;
+            size2=n-size1;
+            
+            for(int i=0;i<size1;i++) arr1[i]=in.nextLong();
+            
+            for(int i=0;i<size2;i++) arr2[i]=in.nextLong();
+            
+            solve(0,0,1);
+            solve(0,0,2);
+            
+            boolean ans=false;
+            
+            for(long i: combination1){
+                
+                long need=k-i;
+                
+                try{
+                
+                 if(combination2.get(need) ){
+                    
+                    return "Yes";
+                    
+                 }
+                
+                }catch(Exception e){
+                    
+                  //  break;
+                    
+                }
+                
+            }
+            
+            return "No";
+            
+        }else{
+            
+            long a;
+            
+            a=in.nextLong();
+            
+            if(a==k || 2*a==k){
+                
+                return "Yes";
+                
+            }
+            
+            return "No";
+            
+        }
+
+    }
+
+    static void solve(int testCases){
+
+        System.out.print("Case "+testCases+": ");
+
+        String ans=solve();
+
+        System.out.println(ans);
+        
+        combination2=new HashMap<>();
+        
+        combination1=new ArrayList<>();
+
+    }
+
+    public static void main(String [] amit){
+
+        testCases=in.nextInt();
+
+        for(int t=1;t<=testCases;t++){
+
+            n=in.nextInt();
+            k=in.nextLong();
+
+            solve(t);
+            
+        }
+
+    }
+
+}
