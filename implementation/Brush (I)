@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+class Brush 
+{
+
+    static int sum(int a[]) {
+
+        int sum = 0;
+
+        for(int i : a) sum += (i >= 0 ? i : 0);
+
+        return sum;
+
+    }
+
+    static int totalDustUnits(int n, int[] a) 
+    {
+
+        return sum(a);
+
+    }
+
+    public static void main(String[] args) throws Exception 
+    {
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        int cases = scanner.nextInt();
+        
+        for (int caseno = 1; caseno <= cases; ++caseno) 
+        {
+            
+            int n = scanner.nextInt();
+            
+            int[] dustUnit = new int[n];
+            
+            for (int i = 0; i < n; ++i) 
+            {
+                
+                dustUnit[i] = scanner.nextInt();
+            
+            }
+            
+            System.out.println("Case " + caseno + ": " + totalDustUnits(n, dustUnit));
+        
+        }
+
+    }
+}
