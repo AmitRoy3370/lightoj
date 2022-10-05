@@ -1,0 +1,100 @@
+import java.util.Scanner;
+
+public class Neighbor_House_II {
+
+    static Scanner in = new Scanner(System.in);
+
+    static int testCases, n;
+    static long a[];
+
+    static long solve(long dp[][][], int pos, int taken, int first) {
+
+        if(pos >= n) return 0;
+
+        if(dp[pos][taken][first] != -1) return dp[pos][taken][first];
+
+        long ret = -1;
+
+        if(pos == 0) {
+
+            ret = solve(dp, pos + 1, 1, 1) + a[pos];
+            ret = Math.max(ret, solve(dp, pos + 1, 0, 0));
+
+        } else if(taken >= 1 || pos == n - 1 && first >= 1) {
+
+            ret = solve(dp, pos + 1, 0, first);
+
+        } else {
+
+            ret = a[pos] + solve(dp, pos + 1, 1, first);
+            ret = Math.max(ret, solve(dp, pos + 1, 0, first));
+
+        }
+
+        return dp[pos][taken][first] = ret;
+
+    }
+
+    static long solve() {
+
+        if(n == 2) {
+
+            return Math.max(a[0], a[1]);
+
+        } else {
+
+            long dp[][][] = new long[n + 1][2][2];
+
+            for(int i = 0; i <= n; ++i) {
+
+                for(int j = 0; j < 2; ++j) {
+
+                    for(int k = 0; k < 2; ++k) {
+
+                        dp[i][j][k] = -1L;
+
+                    }
+
+                }
+
+            }
+
+            return solve(dp, 0, 0, 0);
+
+        }
+
+    }
+
+    static void solve(int t) {
+
+        System.out.print("Case " + t + ": ");
+
+        long ans = solve();
+
+        System.out.println(ans);
+        
+    }
+
+    public static void main(String [] amit) {
+
+        testCases = in.nextInt();
+
+        for(int t = 0; t < testCases; ++t) {
+
+            n = in.nextInt();
+
+            a = new long[n];
+
+            for(int i = 0; i < n; ++i) {
+
+                a[i] = in.nextLong();
+
+            }
+
+            solve(t + 1);
+
+        }
+
+    }
+
+}
