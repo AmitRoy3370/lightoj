@@ -1,0 +1,84 @@
+import java.util.Scanner;
+
+public class A_Dangerous_Maze {
+
+    static int testCases, n;
+
+    static long a[];
+
+    static Scanner in = new Scanner(System.in);
+    
+    static long gcd(long a, long b) {
+        
+        if (b == 0) {
+            
+            return a;
+        
+        }
+        
+        return gcd(b, a % b);
+    
+    }
+
+    static void solve(int t) {
+
+        System.out.print("Case " + t + ": ");
+
+        String ans = "";
+
+        int neg = 0;
+
+        long sum = 0L;
+
+        for(long i : a) {
+
+            if(i < 0) {
+
+                ++neg;
+
+            }
+
+            sum += Math.abs(i);
+
+        }
+
+        if(neg == n) {
+
+            ans = "inf";
+
+            System.out.println(ans);
+            return;
+
+        }
+
+        long gcd = gcd(sum, n - neg);
+
+        ans = (sum / gcd) + "/" + ((n - neg) / gcd);
+
+        System.out.println(ans);
+
+    }
+
+    public static void main(String [] amit) {
+
+        testCases = in.nextInt();
+
+        for(int t = 0; t < testCases; ++t) {
+
+            n = in.nextInt();
+
+            a = new long[n];
+
+            for(int i = 0; i < n; ++i) {
+
+                a[i] = in.nextLong();
+
+            }
+
+            solve(t + 1);
+
+        }
+
+    }
+
+}
