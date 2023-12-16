@@ -1,0 +1,73 @@
+import java.util.Scanner;
+
+class Solution {
+    
+    static Scanner in = new Scanner(System.in);
+    
+    static int testCases;
+    
+    static long s;
+    
+    static StringBuilder ans = new StringBuilder();
+    
+    static void solve(int t) {
+        
+        ans.append("Case ").append(t).append(": ");
+        
+        long raw = 0L, col = 0L;
+        
+        long root = (long)Math.ceil((double)Math.sqrt((double)s));
+        
+        long lackings = root * root - s;
+        
+        if(root > lackings) {
+            
+            raw = root;
+            col = lackings + 1;
+            
+        } else {
+            
+            col = root;
+            raw = s - (root - 1) * (root - 1);
+            
+        }
+        
+        if(root % 2 == 0) {
+            
+            long temp = col;
+            col = raw;
+            raw = temp;
+        
+        }
+        
+        ans.append(col).append(" ").append(raw);
+        
+        if(t != testCases) {
+            
+            ans.append("\n");
+            
+        }
+        
+    }
+    
+    public static void main(String[] args) throws Exception {
+        testCases = in.nextInt();
+        
+        for(int t = 0; t != testCases; ++t) {
+            
+            input();
+            solve(t + 1);
+            
+        }
+        
+        System.out.print(ans.toString());
+        
+    }
+    
+    private static void input() {
+        
+        s = in.nextLong();
+        
+    }
+    
+}
